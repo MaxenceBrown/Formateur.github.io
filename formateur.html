@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espace Formateur — Correction Procédure 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0d12;--surface:#13131a;--surface2:#1a1a24;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --accent:#7b6ef6;--accent2:#5b4fcf;
+  --text:#f0f0f5;--muted:#8888a0;
+  --danger:#f06060;--success:#50c878;--gold:#f5c842;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh}
+.noise{position:fixed;inset:0;pointer-events:none;opacity:.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");z-index:0}
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;position:relative;z-index:1}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2.5rem;width:min(380px,90vw);text-align:center}
+.login-icon{width:56px;height:56px;background:rgba(123,110,246,.15);border:1px solid rgba(123,110,246,.3);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:24px}
+.login-title{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:.4rem}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:2rem}
+.login-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;margin-bottom:12px}
+.login-input:focus{border-color:var(--accent)}
+.login-btn{width:100%;background:var(--accent);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;padding:12px;border:none;border-radius:10px;cursor:pointer;transition:background .2s}
+.login-btn:hover{background:var(--accent2)}
+.login-err{font-size:12px;color:var(--danger);margin-top:8px;display:none}
+#appShell{display:none;position:relative;z-index:1}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;gap:16px;height:56px;position:sticky;top:0;z-index:50}
+.topbar-brand{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px}
+.brand-dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.role-badge{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(123,110,246,.15);border:1px solid rgba(123,110,246,.25);color:var(--accent);font-family:'Syne',sans-serif;font-weight:600;margin-left:4px}
+.main{max-width:960px;margin:0 auto;padding:2rem 1.5rem}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:2rem}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-family:'Syne',sans-serif;margin-bottom:4px}
+.stat-val{font-size:24px;font-weight:500;font-family:'Syne',sans-serif}
+.list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.list-title{font-family:'Syne',sans-serif;font-weight:600;font-size:16px}
+.badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600;font-family:'Syne',sans-serif}
+.badge-pending{background:rgba(245,200,66,.12);color:var(--gold);border:1px solid rgba(245,200,66,.2)}
+.badge-pass{background:rgba(80,200,120,.15);color:var(--success)}
+.badge-fail{background:rgba(240,96,96,.12);color:var(--danger)}
+.badge-late{background:rgba(240,96,96,.1);color:var(--danger);font-size:10px}
+.sub-row{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:border-color .2s}
+.sub-row:hover{border-color:var(--border2)}
+.sub-avatar{width:36px;height:36px;border-radius:8px;background:var(--surface2);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--accent);flex-shrink:0}
+#corrView{display:none}
+.back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:1.5rem;background:none;border:none;padding:0;font-family:'DM Sans',sans-serif;transition:color .2s}
+.back-btn:hover{color:var(--text)}
+.corr-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:2rem}
+.corr-info{flex:1}
+.corr-name{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700}
+.corr-meta{font-size:13px;color:var(--muted);margin-top:4px}
+.score-summary{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;flex-shrink:0}
+.score-big{font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800}
+.q-block{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1rem}
+.q-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:1rem}
+.q-tag{font-size:11px;font-family:'Syne',sans-serif;font-weight:700;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;margin-top:2px}
+.q-question{font-size:14px;color:var(--muted);line-height:1.6;flex:1}
+.q-answer{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:14px;line-height:1.7;color:var(--text);margin-bottom:1rem;white-space:pre-wrap;min-height:40px}
+.q-answer.empty{color:var(--muted);font-style:italic}
+.q-answer.correct{border-color:rgba(80,200,120,.3);background:rgba(80,200,120,.06)}
+.q-answer.wrong{border-color:rgba(240,96,96,.3);background:rgba(240,96,96,.06)}
+.scoring-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.score-label2{font-size:12px;color:var(--muted)}
+.pts-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:'Syne',sans-serif;font-weight:600}
+.pts-btn:hover{border-color:var(--border2);color:var(--text)}
+.pts-btn.active{background:rgba(123,110,246,.2);border-color:rgba(123,110,246,.4);color:var(--accent)}
+.save-btn{background:var(--accent);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;padding:11px 28px;border:none;border-radius:10px;cursor:pointer;transition:background .2s;margin-top:.5rem}
+.save-btn:hover{background:var(--accent2)}
+.empty-state{text-align:center;padding:4rem 0;color:var(--muted)}
+.empty-icon{font-size:48px;margin-bottom:1rem;opacity:.4}
+.icon-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .15s;font-family:'DM Sans',sans-serif}
+.icon-btn:hover{border-color:var(--border2);color:var(--text)}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:12px 18px;font-size:13px;z-index:999;transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+@media(max-width:600px){.corr-header{flex-direction:column}.score-summary{width:100%}.stats-row{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="noise"></div>
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-icon">📋</div>
+    <div class="login-title">Espace Formateur</div>
+    <div class="login-sub">Correction des copies — Procédure 2</div>
+    <input type="password" class="login-input" id="pwdInput" placeholder="Mot de passe formateur" onkeydown="if(event.key==='Enter')login()"/>
+    <button class="login-btn" onclick="login()">Accéder</button>
+    <div class="login-err" id="loginErr">Mot de passe incorrect</div>
+  </div>
+</div>
+<div id="appShell">
+  <div class="topbar">
+    <div class="topbar-brand"><span class="brand-dot"></span> Procédure 2 <span class="role-badge">Formateur</span></div>
+    <button class="icon-btn" style="margin-left:auto" onclick="loadData()">↻ Actualiser</button>
+  </div>
+  <div class="main">
+    <div class="stats-row" id="statsRow"></div>
+    <div id="listView">
+      <div class="list-header"><div class="list-title">Copies reçues</div></div>
+      <div id="submissionsList"></div>
+    </div>
+    <div id="corrView">
+      <button class="back-btn" onclick="backToList()">← Retour à la liste</button>
+      <div id="corrContent"></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+let FORMATEUR_PASSWORD = 'formateur2025';
+let submissions = [], questions = [], currentSub = null, currentScores = {};
+let config = { pass: 17 };
+
+async function loadPasswords() {
+  try {
+    const r = await window.storage.get('proc2_passwords', true);
+    if(r){ const p=JSON.parse(r.value); FORMATEUR_PASSWORD=p.formateur||FORMATEUR_PASSWORD; }
+  } catch(e){}
+}
+
+function login() {
+  if (document.getElementById('pwdInput').value === FORMATEUR_PASSWORD) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appShell').style.display = 'block';
+    loadData(); loadQuestions(); loadConfig();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+    document.getElementById('pwdInput').value = '';
+  }
+}
+document.getElementById('pwdInput').addEventListener('keydown', e => { if(e.key==='Enter') login(); });
+
+// Pre-load passwords so login check uses latest value
+loadPasswords();
+
+async function loadData() {
+  try { const r = await window.storage.get('proc2_submissions', true); submissions = r ? JSON.parse(r.value) : []; } catch(e){ submissions=[]; }
+  renderStats(); renderList();
+}
+async function loadQuestions() {
+  try { const r = await window.storage.get('proc2_questions', true); questions = r ? JSON.parse(r.value) : []; } catch(e){ questions=[]; }
+}
+async function loadConfig() {
+  try { const r = await window.storage.get('proc2_config', true); if(r) Object.assign(config, JSON.parse(r.value)); } catch(e){}
+}
+
+function totalMax(){ return questions.reduce((s,q)=>s+q.points,0); }
+function calcTotal(sub){ return questions.reduce((s,q)=>{const sc=sub.scores?.[q.id];return s+(typeof sc==='number'?sc:0);},0); }
+function initials(name){ const parts=name.replace(/^\d+\s*\|\s*/,'').trim().split(' ');return parts.slice(0,2).map(p=>p[0]||'').join('').toUpperCase()||'?'; }
+
+function renderStats() {
+  const total=submissions.length, corrected=submissions.filter(s=>s.status==='done').length;
+  const passed=submissions.filter(s=>s.status==='done'&&calcTotal(s)>=(config.pass||17)).length;
+  const avg=corrected?Math.round(submissions.filter(s=>s.status==='done').reduce((a,s)=>a+calcTotal(s),0)/corrected*10)/10:'—';
+  document.getElementById('statsRow').innerHTML=`
+    <div class="stat-card"><div class="stat-label">Copies reçues</div><div class="stat-val">${total}</div></div>
+    <div class="stat-card"><div class="stat-label">Corrigées</div><div class="stat-val">${corrected}</div></div>
+    <div class="stat-card"><div class="stat-label">Reçus</div><div class="stat-val" style="color:var(--success)">${passed}</div></div>
+    <div class="stat-card"><div class="stat-label">Moyenne</div><div class="stat-val">${avg}${corrected?`<span style="font-size:14px;font-weight:400;color:var(--muted)">/${totalMax()}</span>`:''}</div></div>`;
+}
+
+function renderList() {
+  const el=document.getElementById('submissionsList');
+  if(!submissions.length){el.innerHTML=`<div class="empty-state"><div class="empty-icon">📭</div><div>Aucune copie reçue pour l'instant.</div></div>`;return;}
+  el.innerHTML=[...submissions].reverse().map((s,ri)=>{
+    const i=submissions.length-1-ri, done=s.status==='done', tot=calcTotal(s), passed=done&&tot>=(config.pass||17);
+    return `<div class="sub-row" onclick="openCorrection(${i})">
+      <div class="sub-avatar">${initials(s.candidat)}</div>
+      <div style="flex:1">
+        <div style="font-weight:500;font-size:14px">${s.candidat}${s.late?' <span class="badge badge-late">Hors délai</span>':''}</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">Soumis le ${s.submittedAt}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:17px;color:${done?(passed?'var(--success)':'var(--danger)'):'var(--muted)'}">${done?tot+'/'+totalMax():'—'}</div>
+        <span class="badge ${done?(passed?'badge-pass':'badge-fail'):'badge-pending'}">${done?(passed?'Reçu':'Recalé'):'À corriger'}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openCorrection(idx) {
+  currentSub=idx; currentScores={...(submissions[idx].scores||{})};
+  questions.forEach(q=>{
+    if((q.type==='mcq'||q.type==='mcq_multi')&&currentScores[q.id]===undefined){
+      const ans=submissions[idx].answers[q.id], correct=q.correct||[];
+      let ok=q.type==='mcq'?ans===correct[0]:(Array.isArray(ans)&&correct.length===ans.length&&correct.every(c=>ans.includes(c)));
+      currentScores[q.id]=ok?q.points:0;
+    }
+  });
+  renderCorrection();
+  document.getElementById('listView').style.display='none';
+  document.getElementById('corrView').style.display='block';
+}
+function backToList(){ document.getElementById('corrView').style.display='none'; document.getElementById('listView').style.display='block'; loadData(); }
+
+function renderCorrection() {
+  const sub=submissions[currentSub];
+  const total=questions.reduce((s,q)=>s+(typeof currentScores[q.id]==='number'?currentScores[q.id]:0),0);
+  const max=totalMax(), passScore=config.pass||17, passed=total>=passScore;
+  let html=`<div class="corr-header">
+    <div class="corr-info"><div class="corr-name">${sub.candidat}</div><div class="corr-meta">Soumis le ${sub.submittedAt}${sub.late?' · <span style="color:var(--danger)">Hors délai</span>':''}</div></div>
+    <div class="score-summary"><div class="score-big" id="scoreBig" style="color:${passed?'var(--success)':'var(--danger)'}">${total}<span style="font-size:1.2rem;font-weight:400;color:var(--muted)">/${max}</span></div>
+    <div id="scoreLabel" style="font-size:12px;font-weight:500;color:${passed?'var(--success)':'var(--danger)'}">${passed?'✓ Reçu':'✗ Recalé'}</div></div></div>`;
+  questions.forEach((q,i)=>{
+    const ans=sub.answers[q.id], sc=currentScores[q.id], isAuto=q.type==='mcq'||q.type==='mcq_multi';
+    let ansDisplay='';
+    if(q.type==='open'){
+      const text=(ans||'').trim();
+      ansDisplay=`<div class="q-answer${text?'':' empty'}">${text||'Aucune réponse'}</div>`;
+    } else {
+      const selected=Array.isArray(ans)?ans:(ans!=null?[ans]:[]);
+      const correct=q.correct||[];
+      const isOk=q.type==='mcq'?ans===correct[0]:(correct.length===selected.length&&correct.every(c=>selected.includes(c)));
+      ansDisplay=`<div class="q-answer${isAuto?(isOk?' correct':' wrong'):''}">${selected.length?selected.map(i=>q.options[i]).join(', '):'<em>Aucune réponse</em>'}</div>`;
+      if(isAuto) ansDisplay+=`<div style="font-size:12px;color:${isOk?'var(--success)':'var(--danger)'};margin-bottom:8px">${isOk?'✓ Bonne réponse':'✗ Mauvaise réponse — Correcte : '+correct.map(c=>q.options[c]).join(', ')}</div>`;
+    }
+    const btns=Array.from({length:q.points+1},(_,pi)=>`<button class="pts-btn${sc===pi?' active':''}" onclick="setScore('${q.id}',${pi},this)">${pi}</button>`).join('');
+    html+=`<div class="q-block"><div class="q-head"><div class="q-tag">Q${i+1}</div><div class="q-question">${q.text.length>120?q.text.slice(0,120)+'…':q.text}</div><div style="font-size:11px;color:var(--muted);white-space:nowrap;margin-left:8px">${q.points} pt${q.points>1?'s':''}</div></div>${ansDisplay}
+      <div class="scoring-row"><span class="score-label2">Note :</span>${btns}${isAuto?'<span style="font-size:11px;color:var(--muted);margin-left:auto">Auto-corrigé</span>':''}</div></div>`;
+  });
+  html+=`<button class="save-btn" onclick="saveCorrection()">Sauvegarder la correction</button>`;
+  document.getElementById('corrContent').innerHTML=html;
+}
+
+function setScore(qid,val,btn){
+  currentScores[qid]=val;
+  btn.closest('.scoring-row').querySelectorAll('.pts-btn').forEach((b,i)=>b.className='pts-btn'+(i===val?' active':''));
+  const passScore=config.pass||17;
+  const total=questions.reduce((s,q)=>s+(typeof currentScores[q.id]==='number'?currentScores[q.id]:0),0);
+  const passed=total>=passScore;
+  const big=document.getElementById('scoreBig');
+  if(big){big.innerHTML=`${total}<span style="font-size:1.2rem;font-weight:400;color:var(--muted)">/${totalMax()}</span>`;big.style.color=passed?'var(--success)':'var(--danger)';}
+  const lbl=document.getElementById('scoreLabel');
+  if(lbl){lbl.textContent=passed?'✓ Reçu':'✗ Recalé';lbl.style.color=passed?'var(--success)':'var(--danger)';}
+}
+
+async function saveCorrection(){
+  submissions[currentSub].scores={...currentScores};submissions[currentSub].status='done';
+  try{await window.storage.set('proc2_submissions',JSON.stringify(submissions),true);toast('Correction sauvegardée ✓');}
+  catch(e){toast('Erreur lors de la sauvegarde');}
+}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+</script>
+</body>
+</html>
