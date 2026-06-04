@@ -70,6 +70,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .score-input::-webkit-outer-spin-button,.score-input::-webkit-inner-spin-button{-webkit-appearance:none}
 .score-input:focus{border-color:var(--accent)}
 .score-max{font-size:13px;color:var(--muted)}
+.q-correction{background:rgba(80,200,120,.06);border:1px solid rgba(80,200,120,.25);border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.7;color:var(--text);margin-bottom:1rem;white-space:pre-wrap}
+.q-correction-label{font-size:11px;font-weight:700;color:var(--success);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px}
 .save-btn{background:var(--accent);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;padding:11px 28px;border:none;border-radius:10px;cursor:pointer;transition:background .2s;margin-top:.5rem}
 .save-btn:hover{background:var(--accent2)}
 .empty-state{text-align:center;padding:4rem 0;color:var(--muted)}
@@ -249,6 +251,9 @@ function renderCorrection() {
     if(q.type==='open'){
       const text=(ans||'').trim();
       ansDisplay=`<div class="q-answer${text?'':' empty'}">${text||'Aucune réponse'}</div>`;
+      if(q.correction&&q.correction.trim()){
+        ansDisplay+=`<div class="q-correction-label">✓ Corrigé attendu — ${q.points} pt${q.points>1?'s':''}</div><div class="q-correction">${q.correction}</div>`;
+      }
     } else {
       const selected=Array.isArray(ans)?ans:(ans!=null?[ans]:[]);
       const correct=q.correct||[];
