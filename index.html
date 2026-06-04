@@ -65,9 +65,10 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .q-answer.wrong{border-color:rgba(240,96,96,.3);background:rgba(240,96,96,.06)}
 .scoring-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .score-label2{font-size:12px;color:var(--muted)}
-.pts-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:'Syne',sans-serif;font-weight:600}
-.pts-btn:hover{border-color:var(--border2);color:var(--text)}
-.pts-btn.active{background:rgba(123,110,246,.2);border-color:rgba(123,110,246,.4);color:var(--accent)}
+.score-input{width:70px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--text);font-family:'Syne',sans-serif;font-weight:700;font-size:15px;text-align:center;outline:none;transition:border-color .2s;-moz-appearance:textfield}
+.score-input::-webkit-outer-spin-button,.score-input::-webkit-inner-spin-button{-webkit-appearance:none}
+.score-input:focus{border-color:var(--accent)}
+.score-max{font-size:13px;color:var(--muted)}
 .save-btn{background:var(--accent);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;padding:11px 28px;border:none;border-radius:10px;cursor:pointer;transition:background .2s;margin-top:.5rem}
 .save-btn:hover{background:var(--accent2)}
 .empty-state{text-align:center;padding:4rem 0;color:var(--muted)}
@@ -147,7 +148,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 </div>
 <div class="toast" id="toast"></div>
 <script>
-let FORMATEUR_PASSWORD = 'test123';
+let FORMATEUR_PASSWORD = 'formateur2025';
 let submissions = [], questions = [], currentSub = null, currentScores = {};
 let config = { pass: 17 };
 
@@ -254,17 +255,20 @@ function renderCorrection() {
       ansDisplay=`<div class="q-answer${isAuto?(isOk?' correct':' wrong'):''}">${selected.length?selected.map(i=>q.options[i]).join(', '):'<em>Aucune réponse</em>'}</div>`;
       if(isAuto) ansDisplay+=`<div style="font-size:12px;color:${isOk?'var(--success)':'var(--danger)'};margin-bottom:8px">${isOk?'✓ Bonne réponse':'✗ Mauvaise réponse — Correcte : '+correct.map(c=>q.options[c]).join(', ')}</div>`;
     }
-    const btns=Array.from({length:q.points+1},(_,pi)=>`<button class="pts-btn${sc===pi?' active':''}" onclick="setScore('${q.id}',${pi},this)">${pi}</button>`).join('');
+    const inputVal = typeof sc === 'number' ? sc : '';
     html+=`<div class="q-block"><div class="q-head"><div class="q-tag">Q${i+1}</div><div class="q-question">${q.text.length>120?q.text.slice(0,120)+'…':q.text}</div><div style="font-size:11px;color:var(--muted);white-space:nowrap;margin-left:8px">${q.points} pt${q.points>1?'s':''}</div></div>${ansDisplay}
-      <div class="scoring-row"><span class="score-label2">Note :</span>${btns}${isAuto?'<span style="font-size:11px;color:var(--muted);margin-left:auto">Auto-corrigé</span>':''}</div></div>`;
+      <div class="scoring-row"><span class="score-label2">Note :</span>
+        <input type="number" class="score-input" id="si_${q.id}" value="${inputVal}" min="0" max="${q.points}" step="0.5" placeholder="—" oninput="setScore('${q.id}',parseFloat(this.value)||0)">
+        <span class="score-max">/ ${q.points} pt${q.points>1?'s':''}</span>
+        ${isAuto?'<span style="font-size:11px;color:var(--muted);margin-left:auto">Auto-corrigé</span>':''}
+      </div></div>`;
   });
   html+=`<button class="save-btn" onclick="saveCorrection()">Sauvegarder la correction</button>`;
   document.getElementById('corrContent').innerHTML=html;
 }
 
-function setScore(qid,val,btn){
+function setScore(qid,val){
   currentScores[qid]=val;
-  btn.closest('.scoring-row').querySelectorAll('.pts-btn').forEach((b,i)=>b.className='pts-btn'+(i===val?' active':''));
   const passScore=config.pass||17;
   const total=questions.reduce((s,q)=>s+(typeof currentScores[q.id]==='number'?currentScores[q.id]:0),0);
   const passed=total>=passScore;
