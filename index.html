@@ -78,6 +78,43 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .toast.show{transform:translateY(0);opacity:1}
 @media(max-width:600px){.corr-header{flex-direction:column}.score-summary{width:100%}.stats-row{grid-template-columns:1fr 1fr}}
 </style>
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCxdDLLbMcVVP8OCgiyIZs1-ujz7rkMSsg",
+    authDomain: "procedure2-900aa.firebaseapp.com",
+    databaseURL: "https://procedure2-900aa-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "procedure2-900aa",
+    storageBucket: "procedure2-900aa.firebasestorage.app",
+    messagingSenderId: "1045293722437",
+    appId: "1:1045293722437:web:f978959fbcb198e328ac2c"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  window.storage = {
+    get: async (key) => {
+      try {
+        const snap = await get(ref(db, 'proc2/' + key));
+        if (snap.exists()) return { value: snap.val() };
+        return null;
+      } catch(e) { console.error('Firebase get error', e); return null; }
+    },
+    set: async (key, value) => {
+      try {
+        await set(ref(db, 'proc2/' + key), value);
+        return { value };
+      } catch(e) { console.error('Firebase set error', e); return null; }
+    }
+  };
+
+  window._firebaseReady = true;
+  window.dispatchEvent(new Event('firebaseReady'));
+</script>
 </head>
 <body>
 <div class="noise"></div>
@@ -110,13 +147,13 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 </div>
 <div class="toast" id="toast"></div>
 <script>
-let FORMATEUR_PASSWORD = 'test123';
+let FORMATEUR_PASSWORD = 'formateur2025';
 let submissions = [], questions = [], currentSub = null, currentScores = {};
 let config = { pass: 17 };
 
 async function loadPasswords() {
   try {
-    const r = await window.storage.get('proc2_passwords', true);
+    const r = await window.storage.get('proc2_passwords');
     if(r){ const p=JSON.parse(r.value); FORMATEUR_PASSWORD=p.formateur||FORMATEUR_PASSWORD; }
   } catch(e){}
 }
@@ -137,14 +174,14 @@ document.getElementById('pwdInput').addEventListener('keydown', e => { if(e.key=
 loadPasswords();
 
 async function loadData() {
-  try { const r = await window.storage.get('proc2_submissions', true); submissions = r ? JSON.parse(r.value) : []; } catch(e){ submissions=[]; }
+  try { const r = await window.storage.get('proc2_submissions'); submissions = r ? JSON.parse(r.value) : []; } catch(e){ submissions=[]; }
   renderStats(); renderList();
 }
 async function loadQuestions() {
-  try { const r = await window.storage.get('proc2_questions', true); questions = r ? JSON.parse(r.value) : []; } catch(e){ questions=[]; }
+  try { const r = await window.storage.get('proc2_questions'); questions = r ? JSON.parse(r.value) : []; } catch(e){ questions=[]; }
 }
 async function loadConfig() {
-  try { const r = await window.storage.get('proc2_config', true); if(r) Object.assign(config, JSON.parse(r.value)); } catch(e){}
+  try { const r = await window.storage.get('proc2_config'); if(r) Object.assign(config, JSON.parse(r.value)); } catch(e){}
 }
 
 function totalMax(){ return questions.reduce((s,q)=>s+q.points,0); }
@@ -239,7 +276,7 @@ function setScore(qid,val,btn){
 
 async function saveCorrection(){
   submissions[currentSub].scores={...currentScores};submissions[currentSub].status='done';
-  try{await window.storage.set('proc2_submissions',JSON.stringify(submissions),true);toast('Correction sauvegardée ✓');}
+  try{await window.storage.set('proc2_submissions',JSON.stringify(submissions));toast('Correction sauvegardée ✓');}
   catch(e){toast('Erreur lors de la sauvegarde');}
 }
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
