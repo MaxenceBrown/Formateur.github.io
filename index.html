@@ -178,7 +178,22 @@ document.getElementById('pwdInput').addEventListener('keydown', e => { if(e.key=
 loadPasswords();
 
 async function loadData() {
-  try { const r = await window.storage.get('proc2_submissions'); submissions = r ? JSON.parse(r.value) : []; } catch(e){ submissions=[]; }
+  // Lire les nouvelles clés individuelles (proc2_sub_*) + anciennes (proc2_submissions)
+  try {
+    submissions = [];
+    // Anciennes soumissions groupées (rétro-compatibilité)
+    try { const r = await window.storage.get('proc2_submissions'); if(r) submissions = JSON.parse(r.value); } catch(e){}
+    // Nouvelles soumissions individuelles
+    try {
+      const keys = await window.storage.list('proc2_sub_');
+      if(keys && keys.keys) {
+        for(const key of keys.keys) {
+          try { const r = await window.storage.get(key); if(r) { const s = JSON.parse(r.value); if(!submissions.find(x=>x.id==s.id)) submissions.push(s); } } catch(e){}
+        }
+      }
+    } catch(e){}
+    submissions.sort((a,b) => (b.id||0) > (a.id||0) ? 1 : -1);
+  } catch(e){ submissions=[]; }
   renderStats(); renderList();
 }
 async function loadQuestions() {
