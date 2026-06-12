@@ -85,7 +85,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 <!-- Firebase SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+  import { getDatabase, ref, get, set, query, orderByKey, startAt, endAt } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCxdDLLbMcVVP8OCgiyIZs1-ujz7rkMSsg",
@@ -116,11 +116,13 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
     },
     list: async (prefix) => {
       try {
-        const snap = await get(ref(db, 'proc2'));
-        if (!snap.exists()) return { keys: [] };
-        const all = snap.val();
-        const keys = Object.keys(all).filter(k => k.startsWith(prefix));
-        return { keys };
+        const q = query(ref(db, 'proc2'), orderByKey(), startAt(prefix), endAt(prefix + '\uf8ff'));
+        const snap = await get(q);
+        const keys = [], values = {};
+        if (snap.exists()) {
+          snap.forEach(child => { keys.push(child.key); values[child.key] = child.val(); });
+        }
+        return { keys, values };
       } catch(e) { console.error('Firebase list error', e); return null; }
     }
   };
@@ -197,7 +199,10 @@ async function loadData() {
       const keys = await window.storage.list('proc2_sub_');
       if(keys && keys.keys) {
         for(const key of keys.keys) {
-          try { const r = await window.storage.get(key); if(r) { const s = JSON.parse(r.value); if(!submissions.find(x=>x.id==s.id)) submissions.push(s); } } catch(e){}
+          try {
+            let raw = (keys.values && keys.values[key] !== undefined) ? keys.values[key] : (await window.storage.get(key))?.value;
+            if(raw) { const s = JSON.parse(raw); if(!submissions.find(x=>x.id==s.id)) submissions.push(s); }
+          } catch(e){}
         }
       }
     } catch(e){}
