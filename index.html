@@ -113,6 +113,15 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
         await set(ref(db, 'proc2/' + key), value);
         return { value };
       } catch(e) { console.error('Firebase set error', e); return null; }
+    },
+    list: async (prefix) => {
+      try {
+        const snap = await get(ref(db, 'proc2'));
+        if (!snap.exists()) return { keys: [] };
+        const all = snap.val();
+        const keys = Object.keys(all).filter(k => k.startsWith(prefix));
+        return { keys };
+      } catch(e) { console.error('Firebase list error', e); return null; }
     }
   };
 
