@@ -3,49 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Espace Formateur — Correction Procédure 2</title>
+<title>Admin — Procédure 2</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0d0d12;--surface:#13131a;--surface2:#1a1a24;
+  --bg:#0d0d12;--surface:#13131a;--surface2:#1a1a24;--surface3:#1e1e2e;
   --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
   --accent:#7b6ef6;--accent2:#5b4fcf;
+  --gold:#f5c842;--gold2:#c49b10;
   --text:#f0f0f5;--muted:#8888a0;
-  --danger:#f06060;--success:#50c878;--gold:#f5c842;
+  --danger:#f06060;--success:#50c878;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh}
 .noise{position:fixed;inset:0;pointer-events:none;opacity:.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");z-index:0}
 #loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;position:relative;z-index:1}
-.login-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2.5rem;width:min(380px,90vw);text-align:center}
-.login-icon{width:56px;height:56px;background:rgba(123,110,246,.15);border:1px solid rgba(123,110,246,.3);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:24px}
-.login-title{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:.4rem}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2.5rem;width:min(400px,90vw);text-align:center}
+.login-icon{width:64px;height:64px;background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.3);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:28px}
+.login-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:.4rem}
+.login-title span{color:var(--gold)}
 .login-sub{font-size:13px;color:var(--muted);margin-bottom:2rem}
 .login-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;margin-bottom:12px}
-.login-input:focus{border-color:var(--accent)}
-.login-btn{width:100%;background:var(--accent);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;padding:12px;border:none;border-radius:10px;cursor:pointer;transition:background .2s}
-.login-btn:hover{background:var(--accent2)}
+.login-input:focus{border-color:var(--gold)}
+.login-btn{width:100%;background:var(--gold);color:#1a1200;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;padding:12px;border:none;border-radius:10px;cursor:pointer;transition:background .2s}
+.login-btn:hover{background:var(--gold2)}
 .login-err{font-size:12px;color:var(--danger);margin-top:8px;display:none}
 #appShell{display:none;position:relative;z-index:1}
-.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;gap:16px;height:56px;position:sticky;top:0;z-index:50}
-.topbar-brand{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px}
-.brand-dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
-.role-badge{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(123,110,246,.15);border:1px solid rgba(123,110,246,.25);color:var(--accent);font-family:'Syne',sans-serif;font-weight:600;margin-left:4px}
-.main{max-width:960px;margin:0 auto;padding:2rem 1.5rem}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;gap:12px;height:56px;position:sticky;top:0;z-index:50}
+.topbar-brand{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;display:flex;align-items:center;gap:8px}
+.brand-dot{width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.role-badge{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(245,200,66,.12);border:1px solid rgba(245,200,66,.25);color:var(--gold);font-family:'Syne',sans-serif;font-weight:700}
+.topbar-tabs{display:flex;gap:4px;margin-left:auto}
+.tab-btn{padding:6px 14px;border-radius:8px;font-size:13px;cursor:pointer;background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .15s}
+.tab-btn:hover{color:var(--text);background:var(--surface2)}
+.tab-btn.active{background:var(--surface2);color:var(--text);font-weight:500}
+.main{max-width:980px;margin:0 auto;padding:2rem 1.5rem}
+.section-heading{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:10px}
+.section-heading span{font-size:13px;font-weight:400;color:var(--muted);font-family:'DM Sans',sans-serif}
 .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:2rem}
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem}
 .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-family:'Syne',sans-serif;margin-bottom:4px}
 .stat-val{font-size:24px;font-weight:500;font-family:'Syne',sans-serif}
-.list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.list-title{font-family:'Syne',sans-serif;font-weight:600;font-size:16px}
 .badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600;font-family:'Syne',sans-serif}
 .badge-pending{background:rgba(245,200,66,.12);color:var(--gold);border:1px solid rgba(245,200,66,.2)}
 .badge-pass{background:rgba(80,200,120,.15);color:var(--success)}
 .badge-fail{background:rgba(240,96,96,.12);color:var(--danger)}
 .badge-late{background:rgba(240,96,96,.1);color:var(--danger);font-size:10px}
-.sub-row{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:border-color .2s}
+.sub-row{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:8px;display:flex;align-items:center;gap:12px;transition:border-color .2s}
 .sub-row:hover{border-color:var(--border2)}
 .sub-avatar{width:36px;height:36px;border-radius:8px;background:var(--surface2);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--accent);flex-shrink:0}
+.sub-row-actions{display:flex;gap:6px;margin-left:auto;align-items:center}
+.icon-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .15s;font-family:'DM Sans',sans-serif}
+.icon-btn:hover{border-color:var(--border2);color:var(--text)}
+.icon-btn.danger:hover{border-color:rgba(240,96,96,.4);color:var(--danger)}
+.empty-state{text-align:center;padding:4rem 0;color:var(--muted)}
+.empty-icon{font-size:48px;margin-bottom:1rem;opacity:.4}
 #corrView{display:none}
 .back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:1.5rem;background:none;border:none;padding:0;font-family:'DM Sans',sans-serif;transition:color .2s}
 .back-btn:hover{color:var(--text)}
@@ -63,29 +75,68 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .q-answer.empty{color:var(--muted);font-style:italic}
 .q-answer.correct{border-color:rgba(80,200,120,.3);background:rgba(80,200,120,.06)}
 .q-answer.wrong{border-color:rgba(240,96,96,.3);background:rgba(240,96,96,.06)}
-.q-img{width:100%;max-height:260px;object-fit:contain;border-radius:10px;margin-bottom:1rem;border:1px solid var(--border)}
 .scoring-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .score-label2{font-size:12px;color:var(--muted)}
-.score-input{width:70px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--text);font-family:'Syne',sans-serif;font-weight:700;font-size:15px;text-align:center;outline:none;transition:border-color .2s;-moz-appearance:textfield}
-.score-input::-webkit-outer-spin-button,.score-input::-webkit-inner-spin-button{-webkit-appearance:none}
-.score-input:focus{border-color:var(--accent)}
-.score-max{font-size:13px;color:var(--muted)}
-.q-correction{background:rgba(80,200,120,.06);border:1px solid rgba(80,200,120,.25);border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.7;color:var(--text);margin-bottom:1rem;white-space:pre-wrap}
-.q-correction-label{font-size:11px;font-weight:700;color:var(--success);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.pts-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:'Syne',sans-serif;font-weight:600}
+.pts-btn:hover{border-color:var(--border2);color:var(--text)}
+.pts-btn.active{background:rgba(123,110,246,.2);border-color:rgba(123,110,246,.4);color:var(--accent)}
 .save-btn{background:var(--accent);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;padding:11px 28px;border:none;border-radius:10px;cursor:pointer;transition:background .2s;margin-top:.5rem}
 .save-btn:hover{background:var(--accent2)}
-.empty-state{text-align:center;padding:4rem 0;color:var(--muted)}
-.empty-icon{font-size:48px;margin-bottom:1rem;opacity:.4}
-.icon-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .15s;font-family:'DM Sans',sans-serif}
-.icon-btn:hover{border-color:var(--border2);color:var(--text)}
+.ed-q-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1rem}
+.ed-q-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.ed-num{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--gold)}
+.ed-type-badge{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--surface2);border:1px solid var(--border);color:var(--muted)}
+.ed-del{margin-left:auto;background:none;border:none;color:var(--muted);cursor:pointer;font-size:20px;transition:color .15s;padding:4px 6px;border-radius:6px}
+.ed-del:hover{color:var(--danger);background:rgba(240,96,96,.08)}
+.ed-field{margin-bottom:10px}
+.ed-label{font-size:12px;color:var(--muted);margin-bottom:5px}
+.ed-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
+.ed-input:focus{border-color:var(--accent)}
+.ed-options{display:flex;flex-direction:column;gap:6px}
+.ed-opt-row{display:flex;gap:6px;align-items:center}
+.ed-opt-correct{width:16px;height:16px;accent-color:var(--accent);flex-shrink:0}
+.add-opt-btn{font-size:12px;color:var(--accent);cursor:pointer;background:none;border:none;margin-top:6px;font-family:'DM Sans',sans-serif;text-align:left}
+.img-upload-zone{border:2px dashed var(--border2);border-radius:10px;padding:1rem;text-align:center;cursor:pointer;transition:border-color .2s;margin-top:6px;position:relative}
+.img-upload-zone:hover{border-color:var(--accent)}
+.img-upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.img-upload-zone .upload-label{font-size:12px;color:var(--muted);pointer-events:none}
+.img-preview{position:relative;margin-top:8px}
+.img-preview img{width:100%;max-height:220px;object-fit:contain;border-radius:8px;border:1px solid var(--border)}
+.img-remove{position:absolute;top:6px;right:6px;background:rgba(13,13,18,.85);border:1px solid var(--border2);border-radius:6px;color:var(--danger);font-size:12px;padding:3px 8px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.q-img{width:100%;max-height:260px;object-fit:contain;border-radius:10px;margin-bottom:1rem;border:1px solid var(--border)}
+.q-correction{background:rgba(80,200,120,.06);border:1px solid rgba(80,200,120,.25);border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.7;color:var(--text);margin-bottom:1rem;white-space:pre-wrap}
+.q-correction-label{font-size:11px;font-weight:700;color:var(--success);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.add-q-bar{display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap}
+.add-q-btn{padding:8px 16px;border:1px dashed var(--border2);border-radius:10px;font-size:13px;color:var(--muted);cursor:pointer;background:none;transition:all .15s;font-family:'DM Sans',sans-serif}
+.add-q-btn:hover{border-color:var(--accent);color:var(--accent)}
+.primary-btn{background:var(--gold);color:#1a1200;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;padding:10px 24px;border:none;border-radius:10px;cursor:pointer;transition:background .2s}
+.primary-btn:hover{background:var(--gold2)}
+.settings-grid{display:grid;gap:1rem;max-width:720px}
+.setting-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem}
+.setting-title{font-family:'Syne',sans-serif;font-weight:600;font-size:14px;margin-bottom:.25rem}
+.setting-desc{font-size:12px;color:var(--muted);margin-bottom:1rem;line-height:1.5}
+.setting-row{display:flex;gap:10px;align-items:center}
+.setting-input{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
+.setting-input:focus{border-color:var(--gold)}
+.setting-btn{background:var(--gold);color:#1a1200;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;padding:9px 18px;border:none;border-radius:8px;cursor:pointer;white-space:nowrap}
+.setting-btn:hover{background:var(--gold2)}
+.danger-zone{border-color:rgba(240,96,96,.25)}
+.danger-zone .setting-title{color:var(--danger)}
+.danger-btn{background:rgba(240,96,96,.15);color:var(--danger);border:1px solid rgba(240,96,96,.3);font-family:'Syne',sans-serif;font-weight:700;font-size:13px;padding:9px 18px;border-radius:8px;cursor:pointer;transition:all .15s}
+.danger-btn:hover{background:rgba(240,96,96,.25)}
+.info-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.info-item{background:var(--surface2);border-radius:8px;padding:10px 14px}
+.info-key{font-size:11px;color:var(--muted);margin-bottom:2px}
+.info-val{font-size:14px;font-weight:500}
+.editor-empty{text-align:center;padding:3rem 0;color:var(--muted);border:1px dashed var(--border2);border-radius:14px;margin-bottom:1rem}
 .toast{position:fixed;bottom:24px;right:24px;background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:12px 18px;font-size:13px;z-index:999;transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
-@media(max-width:600px){.corr-header{flex-direction:column}.score-summary{width:100%}.stats-row{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.corr-header{flex-direction:column}.score-summary{width:100%}.stats-row{grid-template-columns:1fr 1fr}.info-row{grid-template-columns:1fr}}
 </style>
 <!-- Firebase SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getDatabase, ref, get, set, query, orderByKey, startAt, endAt } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+  import { getDatabase, ref, get, set, remove, query, orderByKey, startAt, endAt } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCxdDLLbMcVVP8OCgiyIZs1-ujz7rkMSsg",
@@ -114,6 +165,12 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
         return { value };
       } catch(e) { console.error('Firebase set error', e); return null; }
     },
+    delete: async (key) => {
+      try {
+        await remove(ref(db, 'proc2/' + key));
+        return { deleted: true };
+      } catch(e) { console.error('Firebase delete error', e); return null; }
+    },
     list: async (prefix) => {
       try {
         const q = query(ref(db, 'proc2'), orderByKey(), startAt(prefix), endAt(prefix + '\uf8ff'));
@@ -133,51 +190,116 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 </head>
 <body>
 <div class="noise"></div>
+
 <div id="loginScreen">
   <div class="login-card">
-    <div class="login-icon">📋</div>
-    <div class="login-title">Espace Formateur</div>
-    <div class="login-sub">Correction des copies — Procédure 2</div>
-    <input type="password" class="login-input" id="pwdInput" placeholder="Mot de passe formateur" onkeydown="if(event.key==='Enter')login()"/>
+    <div class="login-icon">👑</div>
+    <div class="login-title">Espace <span>Admin</span></div>
+    <div class="login-sub">Accès Lead — contrôle total de l'examen Procédure 2</div>
+    <input type="password" class="login-input" id="pwdInput" placeholder="Mot de passe administrateur" onkeydown="if(event.key==='Enter')login()"/>
     <button class="login-btn" onclick="login()">Accéder</button>
     <div class="login-err" id="loginErr">Mot de passe incorrect</div>
   </div>
 </div>
+
 <div id="appShell">
   <div class="topbar">
-    <div class="topbar-brand"><span class="brand-dot"></span> Procédure 2 <span class="role-badge">Formateur</span></div>
-    <button class="icon-btn" style="margin-left:auto" onclick="loadData()">↻ Actualiser</button>
+    <div class="topbar-brand"><span class="brand-dot"></span> Procédure 2 <span class="role-badge">👑 Admin</span></div>
+    <div class="topbar-tabs">
+      <button class="tab-btn active" id="tabCopies" onclick="showTab('copies')">Copies</button>
+      <button class="tab-btn" id="tabEditor" onclick="showTab('editor')">Questions</button>
+      <button class="tab-btn" id="tabSettings" onclick="showTab('settings')">Paramètres</button>
+    </div>
   </div>
+
   <div class="main">
-    <div class="stats-row" id="statsRow"></div>
-    <div id="listView">
-      <div class="list-header"><div class="list-title">Copies reçues</div></div>
-      <div id="submissionsList"></div>
+
+    <!-- COPIES -->
+    <div id="copiesView">
+      <div class="stats-row" id="statsRow"></div>
+      <div id="listView">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+          <div class="section-heading" style="margin:0">Copies reçues</div>
+          <button class="icon-btn" onclick="loadData()">↻ Actualiser</button>
+        </div>
+        <div id="submissionsList"></div>
+      </div>
+      <div id="corrView">
+        <button class="back-btn" onclick="backToList()">← Retour à la liste</button>
+        <div id="corrContent"></div>
+      </div>
     </div>
-    <div id="corrView">
-      <button class="back-btn" onclick="backToList()">← Retour à la liste</button>
-      <div id="corrContent"></div>
+
+    <!-- ÉDITEUR DE QUESTIONS -->
+    <div id="editorView" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+        <div class="section-heading" style="margin:0">Éditeur de questions <span>Modifications visibles immédiatement par les candidats</span></div>
+        <button class="primary-btn" onclick="saveQuestions()">Sauvegarder</button>
+      </div>
+      <div id="editorList"></div>
+      <div class="add-q-bar">
+        <button class="add-q-btn" onclick="addQuestion('open')">+ Question ouverte</button>
+        <button class="add-q-btn" onclick="addQuestion('mcq')">+ QCM choix unique</button>
+        <button class="add-q-btn" onclick="addQuestion('mcq_multi')">+ QCM choix multiple</button>
+      </div>
+      <button class="primary-btn" onclick="saveQuestions()" style="margin-top:1.5rem">Sauvegarder les questions</button>
     </div>
+
+    <!-- PARAMÈTRES -->
+    <div id="settingsView" style="display:none">
+      <div class="section-heading">Paramètres généraux</div>
+      <div class="settings-grid">
+        <div class="setting-card">
+          <div class="setting-title">Informations de l'examen</div>
+          <div class="setting-desc">Titre, durée et score minimum de réussite affichés aux candidats.</div>
+          <div class="ed-field"><div class="ed-label">Titre de l'examen</div><input class="setting-input" id="cfg_title" placeholder="Ex : Examen Procédure 2"></div>
+          <div class="ed-field"><div class="ed-label">Durée (minutes)</div><input type="number" class="setting-input" id="cfg_duration" min="1" max="180" style="width:100px"></div>
+          <div class="ed-field"><div class="ed-label">Score de réussite (sur le total)</div><input type="number" class="setting-input" id="cfg_pass" min="1" max="100" style="width:100px"></div>
+          <div class="ed-field"><div class="ed-label">Signature bas de page</div><input class="setting-input" id="cfg_signature"></div>
+          <div class="ed-field"><div class="ed-label">Message de règlement</div><textarea class="setting-input" id="cfg_rules" style="min-height:80px;resize:vertical"></textarea></div>
+          <button class="setting-btn" onclick="saveConfig()">Sauvegarder</button>
+        </div>
+        <div class="setting-card">
+          <div class="setting-title">Mots de passe</div>
+          <div class="setting-desc">Changez les mots de passe d'accès formateur et admin.</div>
+          <div class="ed-field"><div class="ed-label">Nouveau mot de passe formateur</div>
+            <div class="setting-row"><input type="password" class="setting-input" id="new_formateur_pwd" placeholder="Nouveau mot de passe"><button class="setting-btn" onclick="changePassword('formateur')">Changer</button></div>
+          </div>
+          <div class="ed-field" style="margin-top:12px"><div class="ed-label">Nouveau mot de passe admin</div>
+            <div class="setting-row"><input type="password" class="setting-input" id="new_admin_pwd" placeholder="Nouveau mot de passe"><button class="setting-btn" onclick="changePassword('admin')">Changer</button></div>
+          </div>
+        </div>
+        <div class="setting-card">
+          <div class="setting-title">Informations du site</div>
+          <div class="info-row" id="infoRow"></div>
+        </div>
+        <div class="setting-card danger-zone">
+          <div class="setting-title">⚠ Zone dangereuse</div>
+          <div class="setting-desc">Ces actions sont irréversibles.</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="danger-btn" onclick="deleteAllSubmissions()">Supprimer toutes les copies</button>
+            <button class="danger-btn" onclick="clearQuestions()">Vider toutes les questions</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
+
 <div class="toast" id="toast"></div>
+
 <script>
+let ADMIN_PASSWORD = '167ontop';
 let FORMATEUR_PASSWORD = '064ontop';
 let submissions = [], questions = [], currentSub = null, currentScores = {};
-let config = { pass: 17 };
-
-async function loadPasswords() {
-  try {
-    const r = await window.storage.get('proc2_passwords');
-    if(r){ const p=JSON.parse(r.value); FORMATEUR_PASSWORD=p.formateur||FORMATEUR_PASSWORD; }
-  } catch(e){}
-}
+let config = { title: 'Procédure 2', duration: 25, pass: 17, signature: '', rules: '' };
 
 function login() {
-  if (document.getElementById('pwdInput').value === FORMATEUR_PASSWORD) {
+  if (document.getElementById('pwdInput').value === ADMIN_PASSWORD) {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('appShell').style.display = 'block';
-    loadData(); loadQuestions(); loadConfig();
+    loadAll();
   } else {
     document.getElementById('loginErr').style.display = 'block';
     document.getElementById('pwdInput').value = '';
@@ -185,16 +307,13 @@ function login() {
 }
 document.getElementById('pwdInput').addEventListener('keydown', e => { if(e.key==='Enter') login(); });
 
-// Pre-load passwords so login check uses latest value
-loadPasswords();
+async function loadAll() { await Promise.all([loadData(), loadQuestions(), loadConfig(), loadPasswords()]); }
 
 async function loadData() {
   // Lire les nouvelles clés individuelles (proc2_sub_*) + anciennes (proc2_submissions)
   try {
     submissions = [];
-    // Anciennes soumissions groupées (rétro-compatibilité)
     try { const r = await window.storage.get('proc2_submissions'); if(r) submissions = JSON.parse(r.value); } catch(e){}
-    // Nouvelles soumissions individuelles
     try {
       const keys = await window.storage.list('proc2_sub_');
       if(keys && keys.keys) {
@@ -212,40 +331,91 @@ async function loadData() {
 }
 async function loadQuestions() {
   try { const r = await window.storage.get('proc2_questions'); questions = r ? JSON.parse(r.value) : []; } catch(e){ questions=[]; }
+  renderEditor();
 }
 async function loadConfig() {
   try { const r = await window.storage.get('proc2_config'); if(r) Object.assign(config, JSON.parse(r.value)); } catch(e){}
+  fillConfigForm(); renderInfoRow();
+}
+async function loadPasswords() {
+  try {
+    const r = await window.storage.get('proc2_passwords');
+    if(r){ const p=JSON.parse(r.value); ADMIN_PASSWORD=p.admin||ADMIN_PASSWORD; FORMATEUR_PASSWORD=p.formateur||FORMATEUR_PASSWORD; }
+  } catch(e){}
+}
+
+function fillConfigForm() {
+  document.getElementById('cfg_title').value = config.title||'';
+  document.getElementById('cfg_duration').value = config.duration||25;
+  document.getElementById('cfg_pass').value = config.pass||17;
+  document.getElementById('cfg_signature').value = config.signature||'';
+  document.getElementById('cfg_rules').value = config.rules||'';
+}
+function renderInfoRow() {
+  const max = questions.reduce((s,q)=>s+q.points,0);
+  document.getElementById('infoRow').innerHTML = `
+    <div class="info-item"><div class="info-key">Total de points</div><div class="info-val">${max} pts</div></div>
+    <div class="info-item"><div class="info-key">Seuil de réussite</div><div class="info-val">${config.pass}/${max||'?'}</div></div>
+    <div class="info-item"><div class="info-key">Durée examen</div><div class="info-val">${config.duration} min</div></div>
+    <div class="info-item"><div class="info-key">Nombre de questions</div><div class="info-val">${questions.length}</div></div>
+    <div class="info-item"><div class="info-key">Copies reçues</div><div class="info-val">${submissions.length}</div></div>
+    <div class="info-item"><div class="info-key">Copies corrigées</div><div class="info-val">${submissions.filter(s=>s.status==='done').length}</div></div>`;
+}
+
+async function saveConfig() {
+  config.title = document.getElementById('cfg_title').value;
+  config.duration = parseInt(document.getElementById('cfg_duration').value)||25;
+  config.pass = parseInt(document.getElementById('cfg_pass').value)||17;
+  config.signature = document.getElementById('cfg_signature').value;
+  config.rules = document.getElementById('cfg_rules').value;
+  try { await window.storage.set('proc2_config', JSON.stringify(config)); toast('Paramètres sauvegardés ✓'); renderInfoRow(); } catch(e){ toast('Erreur de sauvegarde'); }
+}
+
+async function changePassword(role) {
+  const input = document.getElementById(`new_${role}_pwd`);
+  const val = input.value.trim();
+  if (!val || val.length < 4) { toast('Mot de passe trop court (4 car. min)'); return; }
+  if (role === 'formateur') FORMATEUR_PASSWORD = val;
+  else ADMIN_PASSWORD = val;
+  try {
+    await window.storage.set('proc2_passwords', JSON.stringify({admin: ADMIN_PASSWORD, formateur: FORMATEUR_PASSWORD}), true);
+    toast(`Mot de passe ${role} mis à jour ✓`); input.value = '';
+  } catch(e){ toast('Erreur de sauvegarde'); }
 }
 
 function totalMax(){ return questions.reduce((s,q)=>s+q.points,0); }
 function calcTotal(sub){ return questions.reduce((s,q)=>{const sc=sub.scores?.[q.id];return s+(typeof sc==='number'?sc:0);},0); }
-function initials(name){ const parts=name.replace(/^\d+\s*\|\s*/,'').trim().split(' ');return parts.slice(0,2).map(p=>p[0]||'').join('').toUpperCase()||'?'; }
+function initials(name){ return name.replace(/^\d+\s*\|\s*/,'').trim().split(' ').slice(0,2).map(p=>p[0]||'').join('').toUpperCase()||'?'; }
 
 function renderStats() {
-  const total=submissions.length, corrected=submissions.filter(s=>s.status==='done').length;
-  const passed=submissions.filter(s=>s.status==='done'&&calcTotal(s)>=(config.pass||17)).length;
-  const avg=corrected?Math.round(submissions.filter(s=>s.status==='done').reduce((a,s)=>a+calcTotal(s),0)/corrected*10)/10:'—';
+  const total=submissions.length, done=submissions.filter(s=>s.status==='done').length;
+  const passed=submissions.filter(s=>s.status==='done'&&calcTotal(s)>=config.pass).length;
+  const avg=done?Math.round(submissions.filter(s=>s.status==='done').reduce((a,s)=>a+calcTotal(s),0)/done*10)/10:'—';
   document.getElementById('statsRow').innerHTML=`
     <div class="stat-card"><div class="stat-label">Copies reçues</div><div class="stat-val">${total}</div></div>
-    <div class="stat-card"><div class="stat-label">Corrigées</div><div class="stat-val">${corrected}</div></div>
+    <div class="stat-card"><div class="stat-label">Corrigées</div><div class="stat-val">${done}</div></div>
     <div class="stat-card"><div class="stat-label">Reçus</div><div class="stat-val" style="color:var(--success)">${passed}</div></div>
-    <div class="stat-card"><div class="stat-label">Moyenne</div><div class="stat-val">${avg}${corrected?`<span style="font-size:14px;font-weight:400;color:var(--muted)">/${totalMax()}</span>`:''}</div></div>`;
+    <div class="stat-card"><div class="stat-label">Recalés</div><div class="stat-val" style="color:var(--danger)">${done-passed}</div></div>
+    <div class="stat-card"><div class="stat-label">Moyenne</div><div class="stat-val">${avg}${done?`<span style="font-size:14px;font-weight:400;color:var(--muted)">/${totalMax()}</span>`:''}</div></div>`;
 }
 
 function renderList() {
   const el=document.getElementById('submissionsList');
-  if(!submissions.length){el.innerHTML=`<div class="empty-state"><div class="empty-icon">📭</div><div>Aucune copie reçue pour l'instant.</div></div>`;return;}
+  if(!submissions.length){el.innerHTML=`<div class="empty-state"><div class="empty-icon">📭</div><div>Aucune copie reçue.</div></div>`;return;}
   el.innerHTML=[...submissions].reverse().map((s,ri)=>{
-    const i=submissions.length-1-ri, done=s.status==='done', tot=calcTotal(s), passed=done&&tot>=(config.pass||17);
-    return `<div class="sub-row" onclick="openCorrection(${i})">
+    const i=submissions.length-1-ri, done=s.status==='done', tot=calcTotal(s), passed=done&&tot>=config.pass;
+    return `<div class="sub-row">
       <div class="sub-avatar">${initials(s.candidat)}</div>
-      <div style="flex:1">
+      <div style="flex:1;cursor:pointer" onclick="openCorrection(${i})">
         <div style="font-weight:500;font-size:14px">${s.candidat}${s.late?' <span class="badge badge-late">Hors délai</span>':''}</div>
         <div style="font-size:12px;color:var(--muted);margin-top:2px">Soumis le ${s.submittedAt}</div>
       </div>
-      <div style="text-align:right">
-        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:17px;color:${done?(passed?'var(--success)':'var(--danger)'):'var(--muted)'}">${done?tot+'/'+totalMax():'—'}</div>
-        <span class="badge ${done?(passed?'badge-pass':'badge-fail'):'badge-pending'}">${done?(passed?'Reçu':'Recalé'):'À corriger'}</span>
+      <div class="sub-row-actions">
+        <div style="text-align:right;margin-right:8px">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:${done?(passed?'var(--success)':'var(--danger)'):'var(--muted)'}">${done?tot+'/'+totalMax():'—'}</div>
+          <span class="badge ${done?(passed?'badge-pass':'badge-fail'):'badge-pending'}">${done?(passed?'Reçu':'Recalé'):'À corriger'}</span>
+        </div>
+        <button class="icon-btn danger" onclick="deleteSubmission(${i})" title="Supprimer">✕</button>
       </div>
     </div>`;
   }).join('');
@@ -256,7 +426,7 @@ function openCorrection(idx) {
   questions.forEach(q=>{
     if((q.type==='mcq'||q.type==='mcq_multi')&&currentScores[q.id]===undefined){
       const ans=submissions[idx].answers[q.id], correct=q.correct||[];
-      let ok=q.type==='mcq'?ans===correct[0]:(Array.isArray(ans)&&correct.length===ans.length&&correct.every(c=>ans.includes(c)));
+      const ok=q.type==='mcq'?ans===correct[0]:(Array.isArray(ans)&&correct.length===ans.length&&correct.every(c=>ans.includes(c)));
       currentScores[q.id]=ok?q.points:0;
     }
   });
@@ -269,11 +439,11 @@ function backToList(){ document.getElementById('corrView').style.display='none';
 function renderCorrection() {
   const sub=submissions[currentSub];
   const total=questions.reduce((s,q)=>s+(typeof currentScores[q.id]==='number'?currentScores[q.id]:0),0);
-  const max=totalMax(), passScore=config.pass||17, passed=total>=passScore;
+  const max=totalMax(), passed=total>=config.pass;
   let html=`<div class="corr-header">
     <div class="corr-info"><div class="corr-name">${sub.candidat}</div><div class="corr-meta">Soumis le ${sub.submittedAt}${sub.late?' · <span style="color:var(--danger)">Hors délai</span>':''}</div></div>
     <div class="score-summary"><div class="score-big" id="scoreBig" style="color:${passed?'var(--success)':'var(--danger)'}">${total}<span style="font-size:1.2rem;font-weight:400;color:var(--muted)">/${max}</span></div>
-    <div id="scoreLabel" style="font-size:12px;font-weight:500;color:${passed?'var(--success)':'var(--danger)'}">${passed?'✓ Reçu':'✗ Recalé'}</div></div></div>`;
+    <div id="scoreLabel" style="font-size:12px;font-weight:500;color:${passed?'var(--success)':'var(--danger)'}">${passed?'✓ Reçu':'✗ Recalé'} (seuil: ${config.pass})</div></div></div>`;
   questions.forEach((q,i)=>{
     const ans=sub.answers[q.id], sc=currentScores[q.id], isAuto=q.type==='mcq'||q.type==='mcq_multi';
     let ansDisplay='';
@@ -290,35 +460,141 @@ function renderCorrection() {
       ansDisplay=`<div class="q-answer${isAuto?(isOk?' correct':' wrong'):''}">${selected.length?selected.map(i=>q.options[i]).join(', '):'<em>Aucune réponse</em>'}</div>`;
       if(isAuto) ansDisplay+=`<div style="font-size:12px;color:${isOk?'var(--success)':'var(--danger)'};margin-bottom:8px">${isOk?'✓ Bonne réponse':'✗ Mauvaise réponse — Correcte : '+correct.map(c=>q.options[c]).join(', ')}</div>`;
     }
-    const inputVal = typeof sc === 'number' ? sc : '';
-    html+=`<div class="q-block"><div class="q-head"><div class="q-tag">Q${i+1}</div><div class="q-question">${q.text.length>120?q.text.slice(0,120)+'…':q.text}</div><div style="font-size:11px;color:var(--muted);white-space:nowrap;margin-left:8px">${q.points} pt${q.points>1?'s':''}</div></div>
+    const btns=Array.from({length:q.points+1},(_,pi)=>`<button class="pts-btn${sc===pi?' active':''}" onclick="setScore('${q.id}',${pi},this)">${pi}</button>`).join('');
+    html+=`<div class="q-block"><div class="q-head"><div class="q-tag">Q${i+1}</div><div class="q-question">${q.text.length>120?q.text.slice(0,120)+'…':q.text}</div><div style="font-size:11px;color:var(--muted);white-space:nowrap;margin-left:8px">${q.points}pt</div></div>
       ${q.image?`<img src="${q.image}" class="q-img" alt="image question">`:''}
-      ${ansDisplay}
-      <div class="scoring-row"><span class="score-label2">Note :</span>
-        <input type="number" class="score-input" id="si_${q.id}" value="${inputVal}" min="0" max="${q.points}" step="0.5" placeholder="—" oninput="setScore('${q.id}',parseFloat(this.value)||0)">
-        <span class="score-max">/ ${q.points} pt${q.points>1?'s':''}</span>
-        ${isAuto?'<span style="font-size:11px;color:var(--muted);margin-left:auto">Auto-corrigé</span>':''}
-      </div></div>`;
+      ${ansDisplay}<div class="scoring-row"><span class="score-label2">Note :</span>${btns}${isAuto?'<span style="font-size:11px;color:var(--muted);margin-left:auto">Auto-corrigé</span>':''}</div></div>`;
   });
   html+=`<button class="save-btn" onclick="saveCorrection()">Sauvegarder la correction</button>`;
   document.getElementById('corrContent').innerHTML=html;
 }
 
-function setScore(qid,val){
+function setScore(qid,val,btn){
   currentScores[qid]=val;
-  const passScore=config.pass||17;
+  btn.closest('.scoring-row').querySelectorAll('.pts-btn').forEach((b,i)=>b.className='pts-btn'+(i===val?' active':''));
   const total=questions.reduce((s,q)=>s+(typeof currentScores[q.id]==='number'?currentScores[q.id]:0),0);
-  const passed=total>=passScore;
+  const passed=total>=config.pass;
   const big=document.getElementById('scoreBig');
   if(big){big.innerHTML=`${total}<span style="font-size:1.2rem;font-weight:400;color:var(--muted)">/${totalMax()}</span>`;big.style.color=passed?'var(--success)':'var(--danger)';}
   const lbl=document.getElementById('scoreLabel');
-  if(lbl){lbl.textContent=passed?'✓ Reçu':'✗ Recalé';lbl.style.color=passed?'var(--success)':'var(--danger)';}
+  if(lbl){lbl.textContent=(passed?'✓ Reçu':'✗ Recalé')+' (seuil: '+config.pass+')';lbl.style.color=passed?'var(--success)':'var(--danger)';}
 }
-
 async function saveCorrection(){
   submissions[currentSub].scores={...currentScores};submissions[currentSub].status='done';
   try{await window.storage.set('proc2_submissions',JSON.stringify(submissions));toast('Correction sauvegardée ✓');}
   catch(e){toast('Erreur lors de la sauvegarde');}
+}
+
+async function deleteSubmission(i){
+  if(!confirm(`Supprimer la copie de "${submissions[i].candidat}" ?`)) return;
+  const sub = submissions[i];
+  submissions.splice(i,1);
+  try{
+    await window.storage.set('proc2_submissions',JSON.stringify(submissions));
+    // Supprime aussi la clé individuelle correspondante, sinon la copie
+    // ressuscite (sans les notes) au prochain chargement.
+    if (sub && sub.id !== undefined) {
+      try { await window.storage.delete('proc2_sub_' + sub.id); } catch(e){}
+    }
+    toast('Copie supprimée');renderStats();renderList();
+  }
+  catch(e){toast('Erreur de suppression');}
+}
+async function deleteAllSubmissions(){
+  if(!confirm('ATTENTION : Supprimer TOUTES les copies ?')) return;
+  if(!confirm('Confirmer la suppression de toutes les copies ?')) return;
+  try{
+    await window.storage.set('proc2_submissions',JSON.stringify([]));
+    // Supprime aussi toutes les clés individuelles proc2_sub_*
+    try {
+      const keys = await window.storage.list('proc2_sub_');
+      if (keys && keys.keys) {
+        for (const key of keys.keys) {
+          try { await window.storage.delete(key); } catch(e){}
+        }
+      }
+    } catch(e){}
+    submissions=[];
+    toast('Toutes les copies supprimées');renderStats();renderList();
+  }
+  catch(e){toast('Erreur');}
+}
+async function clearQuestions(){
+  if(!confirm('Vider toutes les questions ? Les candidats verront un examen vide.')) return;
+  questions=[];
+  try{await window.storage.set('proc2_questions',JSON.stringify([]));renderEditor();renderInfoRow();toast('Questions vidées');}
+  catch(e){toast('Erreur');}
+}
+
+// === EDITOR ===
+function renderEditor(){
+  const el = document.getElementById('editorList');
+  if(!questions.length){
+    el.innerHTML=`<div class="editor-empty"><div style="font-size:32px;margin-bottom:1rem;opacity:.4">📝</div><div>Aucune question pour l'instant.<br><span style="font-size:13px">Utilisez les boutons ci-dessous pour en ajouter.</span></div></div>`;
+    return;
+  }
+  el.innerHTML=questions.map((q,i)=>renderEditorQ(q,i)).join('');
+}
+function renderEditorQ(q,i){
+  const typeLabel=q.type==='open'?'Ouverte':q.type==='mcq'?'QCM unique':'QCM multiple';
+  let optHtml='';
+  if(q.type!=='open'){
+    optHtml=`<div class="ed-field"><div class="ed-label">Options <span style="color:var(--muted);font-size:11px">(✓ = bonne réponse)</span></div>
+      <div class="ed-options">${(q.options||[]).map((opt,oi)=>`<div class="ed-opt-row">
+        <input type="${q.type==='mcq_multi'?'checkbox':'radio'}" name="correct_${i}" ${(q.correct||[]).includes(oi)?'checked':''} onchange="updateCorrect(${i})" class="ed-opt-correct" value="${oi}">
+        <input type="text" class="ed-input" value="${opt.replace(/"/g,'&quot;')}" oninput="questions[${i}].options[${oi}]=this.value">
+        <button onclick="removeOption(${i},${oi})" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;padding:0 6px;border-radius:4px" onmouseover="this.style.color='var(--danger)'" onmouseout="this.style.color='var(--muted)'">×</button>
+      </div>`).join('')}</div>
+      <button class="add-opt-btn" onclick="addOption(${i})">+ Ajouter une option</button></div>`;
+  }
+  return `<div class="ed-q-card" id="eq_${i}">
+    <div class="ed-q-header"><span class="ed-num">Q${i+1}</span><span class="ed-type-badge">${typeLabel}</span>
+      <button class="ed-del" onclick="deleteQuestion(${i})" title="Supprimer">×</button></div>
+    <div class="ed-field"><div class="ed-label">Section</div><input type="text" class="ed-input" value="${(q.section||'').replace(/"/g,'&quot;')}" oninput="questions[${i}].section=this.value"></div>
+    <div class="ed-field"><div class="ed-label">Intitulé de la question</div><textarea class="ed-input" style="min-height:70px;resize:vertical" oninput="questions[${i}].text=this.value">${q.text||''}</textarea></div>
+    <div class="ed-field"><div class="ed-label">Image (optionnel)</div>
+      ${q.image
+        ? `<div class="img-preview"><img src="${q.image}" alt="question image"><button class="img-remove" onclick="removeImage(${i})">✕ Supprimer</button></div>`
+        : `<div class="img-upload-zone"><input type="file" accept="image/*" onchange="uploadImage(${i},this)"><div class="upload-label">📷 Cliquer pour ajouter une image</div></div>`
+      }
+    </div>
+    <div class="ed-field"><div class="ed-label">Barème (points)</div><input type="number" class="ed-input" style="width:80px" min="1" max="20" value="${q.points}" oninput="questions[${i}].points=parseInt(this.value)||1"></div>
+    ${q.type==='open'?`<div class="ed-field"><div class="ed-label" style="color:var(--success)">✓ Correction attendue <span style="color:var(--muted);font-weight:400">(visible uniquement par les formateurs)</span></div><textarea class="ed-input" style="min-height:80px;resize:vertical;border-color:rgba(80,200,120,.25)" placeholder="Décris la réponse attendue, les éléments clés à retrouver, le barème de sous-points…" oninput="questions[${i}].correction=this.value">${q.correction||''}</textarea></div>`:''}
+    ${optHtml}</div>`;
+}
+function updateCorrect(qi){
+  questions[qi].correct=[...document.querySelectorAll(`input[name="correct_${qi}"]`)].filter(i=>i.checked).map(i=>parseInt(i.value));
+}
+function addOption(qi){ if(!questions[qi].options)questions[qi].options=[]; questions[qi].options.push('Nouvelle option'); renderEditor(); }
+function removeOption(qi,oi){ questions[qi].options.splice(oi,1); questions[qi].correct=(questions[qi].correct||[]).filter(c=>c!==oi).map(c=>c>oi?c-1:c); renderEditor(); }
+function addQuestion(type){
+  const q={id:'q'+Date.now(),section:'Question Théorique',text:'',type,points:1};
+  if(type!=='open'){q.options=['Option A','Option B'];q.correct=[0];}
+  questions.push(q); renderEditor();
+  setTimeout(()=>document.getElementById(`eq_${questions.length-1}`)?.scrollIntoView({behavior:'smooth'}),100);
+}
+function deleteQuestion(i){ if(!confirm('Supprimer cette question ?'))return; questions.splice(i,1); renderEditor(); }
+function uploadImage(i, input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 1.5 * 1024 * 1024) { toast('Image trop lourde (max 1.5 Mo)'); return; }
+  const reader = new FileReader();
+  reader.onload = e => { questions[i].image = e.target.result; renderEditor(); };
+  reader.readAsDataURL(file);
+}
+function removeImage(i) { delete questions[i].image; renderEditor(); }
+
+async function saveQuestions(){
+  try{await window.storage.set('proc2_questions',JSON.stringify(questions));toast('Questions sauvegardées ✓');renderInfoRow();}
+  catch(e){toast('Erreur de sauvegarde');}
+}
+
+function showTab(tab){
+  ['copies','editor','settings'].forEach(t=>{
+    document.getElementById(t==='copies'?'copiesView':t==='editor'?'editorView':'settingsView').style.display=t===tab?'block':'none';
+    document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1)).className='tab-btn'+(t===tab?' active':'');
+  });
+  if(tab==='settings') renderInfoRow();
 }
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 </script>
